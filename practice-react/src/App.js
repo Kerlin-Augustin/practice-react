@@ -1,18 +1,19 @@
 import './App.css';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Title from './components/title'
 import Modal from './components/modal'
+import EventList from './components/EventList';
 
 function App() {
   // const [name, setName] = useState('luigi')
-  const [showModal, setShowModal] = useState(true)
+  const [showModal, setShowModal] = useState(false)
   const [showEvents, setShowEvents] = useState(true)
   const [events, setEvents] = useState([
     { title: 'mario party', id: 1 },
     { title: 'mario kart', id: 2 },
     { title: 'mario odyssey', id: 3 }
   ])
-  console.log(showEvents)
+  // console.log(showEvents)
   const handleClick = (id) => {
     // name === 'luigi' ? setName('toad') : setName('luigi')
     // console.log(name)
@@ -30,6 +31,8 @@ function App() {
     setShowModal(false)
   }
 
+  const openModal = () => {setShowModal(true)}
+
   const subtitle = "All the latest events in Mario kingdom"
   return (
     <div className="App">
@@ -42,13 +45,7 @@ function App() {
       {showEvents && <div><button onClick={() => setShowEvents(false)}>Hide</button></div>}
       {!showEvents && <div><button onClick={() => setShowEvents(true)}>Show</button></div>}
 
-      {showEvents && events.map((event, index) => (
-        <React.Fragment key={event.id}>
-          <h2>{index} - {event.title}
-            <button onClick={() => handleClick(event.id)}>Delete</button>
-          </h2>
-        </React.Fragment>
-      ))}
+      {showEvents && <EventList events={events} handleClick={handleClick} />}
 
 
       {/* <Modal>
@@ -58,13 +55,13 @@ function App() {
         <p>Use the code SPECIAL at the checkout.</p>
       </Modal> */}
 
-      {showModal && <Modal handleClose={handleClose}>
+      {showModal && <Modal handleClose={handleClose} isSalesModal={true}>
         <h2>Terms and Conditions</h2>
         <p>lorem ipsum dolor sit amet</p>
         <a href='#'>Find out more...</a>
       </Modal>}
 
-
+      <button onClick={openModal}>Show Modal</button>
 
     </div>
   );
