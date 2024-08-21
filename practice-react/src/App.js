@@ -5,6 +5,7 @@ import Modal from './components/modal'
 
 function App() {
   // const [name, setName] = useState('luigi')
+  const [showModal, setShowModal] = useState(true)
   const [showEvents, setShowEvents] = useState(true)
   const [events, setEvents] = useState([
     { title: 'mario party', id: 1 },
@@ -23,6 +24,10 @@ function App() {
       return prevEvents.filter(event => id !== event.id)
     })
     console.log(id)
+  }
+
+  const handleClose = () => {
+    setShowModal(false)
   }
 
   const subtitle = "All the latest events in Mario kingdom"
@@ -53,11 +58,11 @@ function App() {
         <p>Use the code SPECIAL at the checkout.</p>
       </Modal> */}
 
-      <Modal>
+      {showModal && <Modal handleClose={handleClose}>
         <h2>Terms and Conditions</h2>
         <p>lorem ipsum dolor sit amet</p>
         <a href='#'>Find out more...</a>
-      </Modal>
+      </Modal>}
 
 
 
