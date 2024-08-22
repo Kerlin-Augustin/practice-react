@@ -3,32 +3,31 @@ import { useState } from 'react';
 import Title from './components/title'
 import Modal from './components/modal'
 import EventList from './components/EventList';
+import NewEventForm from './components/NewEventForm';
 
 function App() {
   // const [name, setName] = useState('luigi')
   const [showModal, setShowModal] = useState(false)
   const [showEvents, setShowEvents] = useState(true)
-  const [events, setEvents] = useState([
-    { title: 'mario party', id: 1 },
-    { title: 'mario kart', id: 2 },
-    { title: 'mario odyssey', id: 3 }
-  ])
-  // console.log(showEvents)
+  const [events, setEvents] = useState([])
+
+  const addEvent = (event) => {
+    setEvents((prevEvents) => {
+      return [...prevEvents, event]
+    })
+    setShowModal(false)
+  }
+
+
+
   const handleClick = (id) => {
     // name === 'luigi' ? setName('toad') : setName('luigi')
     // console.log(name)
     // you only need to do a callback function if your new state relies on the previous state value. So if I just wanted to change the name of something using state you dont need to worry about doing a callback.
-
-
-
     setEvents((prevEvents) => {
       return prevEvents.filter(event => id !== event.id)
     })
     console.log(id)
-  }
-
-  const handleClose = () => {
-    setShowModal(false)
   }
 
   const openModal = () => {setShowModal(true)}
@@ -55,13 +54,11 @@ function App() {
         <p>Use the code SPECIAL at the checkout.</p>
       </Modal> */}
 
-      {showModal && <Modal handleClose={handleClose} isSalesModal={true}>
-        <h2>Terms and Conditions</h2>
-        <p>lorem ipsum dolor sit amet</p>
-        <a href='#'>Find out more...</a>
+      {showModal && <Modal isSalesModal={true}>
+        <NewEventForm addEvent={addEvent}/>
       </Modal>}
 
-      <button onClick={openModal}>Show Modal</button>
+      <button onClick={openModal}>Add New Event</button>
 
     </div>
   );
